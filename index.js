@@ -8,8 +8,6 @@ const logger = require('morgan');
 const helmet = require('helmet');
 const projectRouter = require('./routers/projectRouter');
 const actionRouter = require('./routers/actionRouter')
-//const actions = require('./data/helpers/actionModel')
-//const projects = require('./data/helpers/projectModel')
 
 server.use(express.json());
 server.use(cors({}));

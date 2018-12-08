@@ -133,7 +133,7 @@ router.post('/', (req, res) => {
 /************* Get Single Project's Actions *************/
 router.get('/actions/:id', (req, res) => {
     const { id } = req.params;
-    users
+    projects
         .getProjectActions(id)
         .then(usersActions => {
             if (usersActions === 0) {
