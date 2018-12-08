@@ -18,6 +18,7 @@ class App extends Component {
     axios
       .get('http://localhost:5050/api/projects')
       .then(response => {
+        console.log("response:", response)
         this.setState(() => ({ projects: response.data }));
       })
       .catch(error => {
@@ -63,7 +64,6 @@ class App extends Component {
     axios
       .get(`http://localhost:5050/api/projects/actions/${id}`)
       .then(response => {
-        console.log("response:", response)
         this.setState(() => ({ actions: response.data }));
       })
       .catch(error => {
@@ -74,16 +74,10 @@ class App extends Component {
   }
 
   deleteHandler = (id) => {
-    console.log("id:", id)
     axios
       .delete(`http://localhost:5050/api/actions/${id}`)
       .then(response => {
-        console.log("response:", response)
         this.getHandler();
-
-        // window.location.reload();
-        //getHandler;
-        /*  this.setState(() => ({ posts: response.data })); */
       })
       .catch(error => {
         console.error('Server Error', error);
@@ -91,14 +85,10 @@ class App extends Component {
   }
 
   deleteProjectHandler = (id) => {
-    console.log("id:", id)
     axios
       .delete(`http://localhost:5050/api/projects/${id}`)
       .then(response => {
-        console.log("response:", response)
-        // window.location.reload();
-        this.getProjectHandler();
-        /*  this.setState(() => ({ posts: response.data })); */
+        this.getProjectHandler(); 
       })
       .catch(error => {
         console.error('Server Error', error);
