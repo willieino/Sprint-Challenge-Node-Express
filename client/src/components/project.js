@@ -2,15 +2,7 @@ import React from 'react';
 import '../App.css';
 
 const Project = props => {
-    const completed = props.completed
-    if (completed) {
-        const complete = 'true'
-
-    } else {
-        const complete = 'false'
-    }
     
-    console.log("completed:", completed)
   return (
     <div className="users" onSubmit={props.submitHandler} onClick={() => props.getProjectActions(props.id)}><div className="user-data">
       <h4>Name: {props.name}</h4>
