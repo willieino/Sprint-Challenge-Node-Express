@@ -32,9 +32,9 @@ const sendUserError = (msg, res) => {
 
 // add your server code starting here
 
+/************************************ PROJECTS SECTION ***********************************/
 
 /********* Get Projects *************/
-
 server.get('/api/projects', (req, res) => {
     projects.get()
         .then((projects) => {
@@ -47,7 +47,7 @@ server.get('/api/projects', (req, res) => {
         });
 });
 
-/********* Get Single Projectost *************/
+/********* Get Single Project *************/
 server.get('/api/projects/:id', (req, res) => {
     const { id } = req.params
     projects.get(id)
@@ -68,11 +68,11 @@ server.get('/api/projects/:id', (req, res) => {
 });
 
 
-/************* Delete Post *************/
+/************* Delete Project *************/
 server.delete('/api/projects/:id', (req, res) => {
     const { id } = req.params
-    const foundProject = projects.find(project => project.id == id);
-    if (foundProject) {
+
+    if (id) {
         projects.remove(id)
             .then(project => {
                 if (project) {
@@ -91,7 +91,7 @@ server.delete('/api/projects/:id', (req, res) => {
     }
 });
 
-/********* Update Post *************/
+/********* Update Project *************/
 server.put('/api/projects/:id', (req, res) => {
     const { id } = req.params
     const newProject = req.body
@@ -101,12 +101,12 @@ server.put('/api/projects/:id', (req, res) => {
             .status(400)
             .json({ message: "Please provide name, description and completed for the project." });
     } else {
-        const project = projects.findById(id)
-        if (project) {
+       
+        if (newProject) {
             projects.update(id, newProject)
                 .then(project => {
-                    if (project) {
-                        projects.findById(id);
+                   
+                        
                         if (project) {
                             res
                                 .status(201)
@@ -116,9 +116,8 @@ server.put('/api/projects/:id', (req, res) => {
                                 .status(404)
                                 .json({ message: "The project with the specified ID does not exist." })
                         }
-                    } else {
-                        // nothing here
-                    }
+                 
+                   
                 })
                 .catch(err => {
                     res
@@ -143,18 +142,156 @@ server.post('/api/projects', (req, res) => {
                 res.status(201)
                     .json(project)
             })
-                .catch (err => {
+            .catch(err => {
+                res
+                    .status(500)
+                    .json({ message: "failed to insert project in db" })
+            });
+    } else {
+        res
+            .status(400)
+            .json({ message: "missing name, description or completed status." })
+    }
+});
+
+/************* Get Single Project's Actions *************/
+server.get('api/projects/actions/:id', (req, res) => {
+    const { id } = req.params;
+    users
+        .getProjectActions(id)
+        .then(usersActions => {
+            if (usersActions === 0) {
+                return sendUserError(404, 'No actions in the project', res);
+            }
+            res.json(usersActions);
+        })
+        .catch(err => {
+            return sendUserError(500, 'Unable to access db', res);
+        });
+});
+
+/***************************************** ACTIONS SECTION **************************************/
+
+
+/********* Get Actions *************/
+server.get('/api/actions', (req, res) => {
+    actions.get()
+        .then((actions) => {
+            res.json(actions);
+        })
+        .catch(err => {
             res
                 .status(500)
-                .json({ message: "failed to insert project in db" })
+                .json({ error: "The actions information could not be retrieved." });
         });
-        } else {
-    res
-        .status(400)
-        .json({ message: "missing name, description or completed status." })
-}
-    });
+});
 
+/********* Get Single Action *************/
+server.get('/api/actions/:id', (req, res) => {
+    const { id } = req.params
+    actions.get(id)
+        .then(action => {
+            if (action) {
+                res.json(action);
+            } else {
+                res
+                    .status(404)
+                    .json({ message: "The actions with the specified ID dont exist." })
+            }
+        })
+        .catch(err => {
+            res
+                .status(500)
+                .json({ error: "The actions could not be retrieved." });
+        });
+});
+
+
+/************* Delete Action *************/
+server.delete('/api/actions/:id', (req, res) => {
+    const { id } = req.params
+   
+    if (id) {
+        actions.remove(id)
+            .then(action => {
+                if (action) {
+                    res.json({ message: "The action was successfully deleted" });
+                } else {
+                    res
+                        .status(404)
+                        .json({ message: "The action with the specified ID does not exist." })
+                }
+            })
+            .catch(err => {
+                res
+                    .status(500)
+                    .json({ error: "The action could not be removed." });
+            });
+    }
+});
+
+/********* Update Action *************/
+server.put('/api/actions/:id', (req, res) => {
+    const { id } = req.params
+    const newAction = req.body
+
+    if (!newAction.project_id || !newAction.description || !newAction.notes || !newAction.completed) {
+        res
+            .status(400)
+            .json({ message: "Please provide project id, description, notes and completion status for the action." });
+    } else {
+        
+        if (newAction) {
+            actions.update(id, newAction)
+                .then(action => {
+                    if (action) {
+                       
+                     
+                            res
+                                .status(201)
+                                .json(action);
+                        } else {
+                            res
+                                .status(404)
+                                .json({ message: "The action with the specified ID does not exist." })
+                        }
+                  
+                })
+                .catch(err => {
+                    res
+                        .status(500)
+                        .json({ error: "The action could not be modified." });
+                });
+        } else {
+
+            res
+                .status(404)
+                .json({ message: "The action with the specified ID does not exist." })
+        }
+    }
+})
+
+/********* Create New Action *************/
+server.post('/api/actions', (req, res) => {
+    const action = req.body;
+    console.log("action:", action)
+    if (action.project_id && action.description && action.notes && action.completed) {
+        actions.insert(action)
+            .then(action => {
+                res.status(201)
+                    .json(action)
+            })
+            .catch(err => {
+                res
+                    .status(500)
+                    .json({ message: "failed to insert action in db" })
+            });
+    } else {
+        res
+            .status(400)
+            .json({ message: "missing project_id, description, notes or completion status." })
+    }
+});
 
 
 
