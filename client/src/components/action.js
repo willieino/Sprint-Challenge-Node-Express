@@ -7,7 +7,7 @@ const Action = props => {
       <h4>Description: {props.description}</h4>
       <strong>Project Id: {props.project_id} </strong><br />
       <strong>Notes: {props.notes} </strong><br />
-      <strong>Completed: {props.completed} </strong><br />
+      <strong>Completed: {props.completed ? "true" : "false" }  </strong><br />
       <strong>Id: {props.id} </strong>
       <p></p></div>
       <div className="post-controls">
