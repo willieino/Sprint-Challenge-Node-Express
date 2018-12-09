@@ -10,6 +10,7 @@ class App extends Component {
     this.state = {
       projects: [],
       actions: [],
+      selected: null
     };
   }
 
@@ -18,7 +19,7 @@ class App extends Component {
     axios
       .get('http://localhost:5050/api/projects')
       .then(response => {
-        this.setState(() => ({ projects: response.data }));
+        this.setState(() => ({ projects: response.data, selected: false }));
       })
       .catch(error => {
         console.error('Server Error', error);
@@ -50,7 +51,10 @@ class App extends Component {
     axios
       .get(`http://localhost:5050/api/projects/actions/${id}`)
       .then(response => {
-        this.setState(() => ({ actions: response.data }));
+        const selectedId = id
+        console.log("id:", id)
+        this.setState(() => ({ actions: response.data, selected: selectedId }));
+        console.log("the state", this.state)
       })
       .catch(error => {
         console.error('Server Error', error);
@@ -111,7 +115,14 @@ class App extends Component {
   }
 
   render() {
-
+   // let classNames = require('classnames');
+    //let temp = this.props.id;
+   // ((temp % 2) === 0)? temp = false: temp = true;
+   
+	//	let tableRow = classNames({
+	//		'column': true,
+	//		'hi-lite': temp
+	//	})
     return (
       <div className="container">
         <div className="header-container">
@@ -134,6 +145,7 @@ class App extends Component {
                   description={project.description}
                   completed={project.completed}
                   key={project.id}
+                  selected={this.state.selected}
                   getProjectActions={this.getProjectActions}
                   editProjectHandler={this.editProjectHandler}
                   deleteProjectHandler={this.deleteProjectHandler}

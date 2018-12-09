@@ -68,6 +68,10 @@ h3 {
     color: white;
 }
 
+.users-selected {
+    background-color: rgb(16, 56, 83);
+}
+
 .close-button {
     font-size: 24px;
     font-weight: bold;
