@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import Action from "./components/action";
 import Project from "./components/project";
 import axios from "axios"
@@ -15,10 +14,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+
     axios
       .get('http://localhost:5050/api/projects')
       .then(response => {
-        console.log("response:", response)
         this.setState(() => ({ projects: response.data }));
       })
       .catch(error => {
@@ -33,33 +32,20 @@ class App extends Component {
       .catch(error => {
         console.error('Server Error', error);
       });
-
-
-
-
-
   }
-
   closeHandler = (id) => {
-    alert("CLOSE function is disabled in LITE version, :) Please purchase the full version to enable this feature.")
-
+    alert("CLOSE function is disabled in SPRINT CHALLENGE version, :) Please purchase the full version to enable this feature.")
   }
-
   closeProjectHandler = (id) => {
     alert("function is unavailable at this time...")
-
   }
-
   editHandler = id => {
-    alert("Function EDIT is disabled in LITE version, :) Please purchase the FULL version to enable this feature.")
-
+    alert("Function EDIT is disabled in SPRINT CHALLENGE version, :) Please purchase the FULL version to enable this feature.")
   }
-
   editUserHandler = id => {
-    alert("Function EDIT is disabled in LITE version, :) Please purchase the FULL version to enable this feature.")
-
+    alert("Function EDIT is disabled in SPRINT CHALLENGE version, :) Please purchase the FULL version to enable this feature.")
   }
-
+  /*****************  Get Actions For Single Project  *********************/
   getProjectActions = id => {
     axios
       .get(`http://localhost:5050/api/projects/actions/${id}`)
@@ -69,10 +55,9 @@ class App extends Component {
       .catch(error => {
         console.error('Server Error', error);
       });
-
-
   }
 
+  /*****************  Delete Action *********************/
   deleteHandler = (id) => {
     axios
       .delete(`http://localhost:5050/api/actions/${id}`)
@@ -84,17 +69,19 @@ class App extends Component {
       });
   }
 
+  /*****************  Delete Project *********************/
   deleteProjectHandler = (id) => {
     axios
       .delete(`http://localhost:5050/api/projects/${id}`)
       .then(response => {
-        this.getProjectHandler(); 
+        this.getProjectHandler();
       })
       .catch(error => {
         console.error('Server Error', error);
       });
   }
 
+  /*****************  Get All Actions *********************/
   getHandler = (e) => {
     axios
       .get('http://localhost:5050/api/actions')
@@ -106,6 +93,7 @@ class App extends Component {
       });
   }
 
+  /*****************  Get All Projects *********************/
   getProjectHandler = e => {
     axios
       .get('http://localhost:5050/api/projects')
@@ -117,6 +105,7 @@ class App extends Component {
       });
   }
 
+  /***************  Message Handler  ****************/
   genericMessage = e => {
     alert("Function not available at this time...");
   }
@@ -135,22 +124,25 @@ class App extends Component {
           </div>
         </div>
         <div className="container-lower">
-          <div className="container-left"><h3>Projects</h3><ul>{this.state.projects.map(project => {
-            return (
-              <Project
-                name={project.name}
-                id={project.id}
-                description={project.description}
-                completed={project.completed}
-                key={project.id}
-                getProjectActions={this.getProjectActions}
-                editProjectHandler={this.editProjectHandler}
-                deleteProjectHandler={this.deleteProjectHandler}
-                closeProjectHandler={this.closeProjectHandler}
-              />);
-          })}
-          </ul></div>
-          <div className="container-middle"><h3>Actions</h3>
+          <div className="container-left">
+            <h3>Projects</h3>
+            <ul>{this.state.projects.map(project => {
+              return (
+                <Project
+                  name={project.name}
+                  id={project.id}
+                  description={project.description}
+                  completed={project.completed}
+                  key={project.id}
+                  getProjectActions={this.getProjectActions}
+                  editProjectHandler={this.editProjectHandler}
+                  deleteProjectHandler={this.deleteProjectHandler}
+                  closeProjectHandler={this.closeProjectHandler}
+                />);
+            })}
+            </ul></div>
+          <div className="container-middle">
+            <h3>Actions</h3>
             <ul>{this.state.actions.map(action => {
               return (
                 <Action
@@ -166,7 +158,6 @@ class App extends Component {
                 />);
             })}
             </ul>
-
           </div>
         </div>
       </div>

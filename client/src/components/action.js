@@ -6,8 +6,8 @@ const Action = props => {
     <div className="posts" onSubmit={props.submitHandler}><div className="post-data">
       <h4><span className="high-lite3">Description: </span> <span className="high-lite">{props.description}</span></h4>
       <strong>Project Id: {props.project_id} </strong><br />
-      <strong>Notes: <span className="high-lite">{props.notes}</span> </strong><br />
-      <strong>Completed:<span className="high-lite"> {props.completed ? "true" : "false" }</span>  </strong><br />
+      <strong>Notes: <span className="high-lite2">{props.notes}</span> </strong><br />
+      <strong>Completed:<span className="high-lite2"> {props.completed ? "true" : "false" }</span>  </strong><br />
       <strong>Id: {props.id} </strong>
       <p></p></div>
       <div className="post-controls">
