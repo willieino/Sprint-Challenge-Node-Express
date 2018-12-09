@@ -5,10 +5,10 @@ const Project = props => {
     
   return (
     <div className="users" onSubmit={props.submitHandler} onClick={() => props.getProjectActions(props.id)}><div className="user-data">
-      <h4>Name: {props.name}</h4>
+      <h4><span className="high-lite3">Name: </span><span className="high-lite">{props.name}</span></h4>
       <strong>Id: {props.id} </strong><br />
-      <strong>Description: {props.description} </strong><br />
-      <strong>Completed: {props.completed ? "true" : "false" } </strong><br />
+      <strong>Description: <span className="high-lite2">{props.description}</span> </strong><br />
+      <strong>Completed: <span className="high-lite">{props.completed ? "true" : "false" }</span> </strong><br />
       <strong>Click to view Actions</strong>
      
       <p></p></div>

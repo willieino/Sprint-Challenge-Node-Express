@@ -4,10 +4,10 @@ import '../App.css';
 const Action = props => {
   return (
     <div className="posts" onSubmit={props.submitHandler}><div className="post-data">
-      <h4>Description: {props.description}</h4>
+      <h4><span className="high-lite3">Description: </span> <span className="high-lite">{props.description}</span></h4>
       <strong>Project Id: {props.project_id} </strong><br />
-      <strong>Notes: {props.notes} </strong><br />
-      <strong>Completed: {props.completed ? "true" : "false" }  </strong><br />
+      <strong>Notes: <span className="high-lite">{props.notes}</span> </strong><br />
+      <strong>Completed:<span className="high-lite"> {props.completed ? "true" : "false" }</span>  </strong><br />
       <strong>Id: {props.id} </strong>
       <p></p></div>
       <div className="post-controls">

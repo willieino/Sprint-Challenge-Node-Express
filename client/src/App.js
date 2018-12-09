@@ -45,7 +45,7 @@ class App extends Component {
 
   }
 
-  closeUserHandler = (id) => {
+  closeProjectHandler = (id) => {
     alert("function is unavailable at this time...")
 
   }
@@ -127,11 +127,11 @@ class App extends Component {
       <div className="container">
         <div className="header-container">
           <div className="create-button">
-            <button className="create" onClick={this.genericMessage}>Create Action</button>
+            <button className="create" onClick={this.genericMessage}>New Project</button>
           </div>
           <h2>Sprint Challenge: Node Express</h2>
           <div className="create-button">
-            <button className="create" onClick={this.genericMessage}>Create Project</button>
+            <button className="create" onClick={this.genericMessage}>New Action</button>
           </div>
         </div>
         <div className="container-lower">
